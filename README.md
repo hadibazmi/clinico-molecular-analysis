@@ -9,14 +9,14 @@
 ---
 
 ## 📑 Table of Contents
-1. [Setup & Installation](#-1-environment-setup-01requiredpackagesr)
-2. [Normality Testing](#-2-normality-testing-02normalitytestsr)
-3. [RainCloud Plots](#-3-expression-raincloud-plots-03raincloudplotr)
-4. [ROC Analysis](#-4-biomarker-roc-analysis-04roc-analysisr)
-5. [Demographic Data](#-5-demographic-extraction-05demographicdataextractionr)
-6. [Clinical Features](#-6-clinical-features-correlation-06analysisofclinicalfeaturesr)
-7. [qRT-PCR Analysis](#-7-qrt-pcr-analysis-07qpcranalyzer)
-8. [Cell Cycle Analysis](#-8-cell-cycle-flow-cytometry-08cellcycleanalyzer)
+1. [Setup & Installation](#1-environment-setup-01requiredpackagesr)
+2. [Normality Testing](#2-normality-testing-02normalitytestsr)
+3. [RainCloud Plots](#3-expression-raincloud-plots-03raincloudplotr)
+4. [ROC Analysis](#4-biomarker-roc-analysis-04roc-analysisr)
+5. [Demographic Data](#5-demographic-extraction-05demographicdataextractionr)
+6. [Clinical Features](#6-clinical-features-correlation-06analysisofclinicalfeaturesr)
+7. [qRT-PCR Analysis](#7-qrt-pcr-analysis-07qpcranalyzer)
+8. [Cell Cycle Analysis](#8-cell-cycle-flow-cytometry-08cellcycleanalyzer)
 
 ---
 
