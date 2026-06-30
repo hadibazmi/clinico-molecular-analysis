@@ -11,12 +11,12 @@
 ## 📑 Table of Contents
 1. [Setup & Installation](#1-environment-setup-01requiredpackagesr)
 2. [Normality Testing](#2-normality-testing-02normalitytestsr)
-3. [RainCloud Plots](#3-expression-raincloud-plots-03raincloudplotr)
-4. [ROC Analysis](#4-biomarker-roc-analysis-04roc-analysisr)
-5. [Demographic Data](#5-demographic-extraction-05demographicdataextractionr)
-6. [Clinical Features](#6-clinical-features-correlation-06analysisofclinicalfeaturesr)
-7. [qRT-PCR Analysis](#7-qrt-pcr-analysis-07qpcranalyzer)
-8. [Cell Cycle Analysis](#8-cell-cycle-flow-cytometry-08cellcycleanalyzer)
+3. [Expression RainCloud Plots](#3-expression-raincloud-plots-03raincloudplotr)
+4. [Biomarker ROC Analysis](#4-biomarker-roc-analysis-04roc-analysisr)
+5. [Demographic Extraction](#5-demographic-extraction-05demographicdataextractionr)
+6. [Clinical Features Correlation](#6-clinical-features-correlation-06analysisofclinicalfeaturesr)
+7. [qRT-PCR Expression Analysis](#7-qrt-pcr-expression-analysis-07qpcranalyzer)
+8. [Cell Cycle Flow Cytometry](#8-cell-cycle-flow-cytometry-08cellcycleanalyzer)
 
 ---
 
@@ -28,21 +28,31 @@ To begin utilizing this repository, clone it to your local machine or Linux serv
 git clone [https://github.com/YourUsername/ClinicalGenomicStats.git](https://github.com/YourUsername/ClinicalGenomicStats.git)
 cd ClinicalGenomicStats
 ```
-📦 1. Environment Setup (01.RequiredPackages.R)
+
+---
+
+## 📦 1. Environment Setup (01.RequiredPackages.R)
+
 Before running any analytical scripts, you must configure your R environment. This script intelligently scans your system, identifies missing dependencies, installs them seamlessly from CRAN, and loads them for immediate use.
 
-Dependencies handled: ggplot2, dplyr, pROC, readxl, ggdist, and more.
+**Dependencies handled:** `ggplot2`, `dplyr`, `pROC`, `readxl`, `ggdist`, `writexl`, `nortest`, `gridExtra`, `fs`, `openxlsx`, `pacman`, `tidyr`.
 
-💻 Usage
+### 💻 Usage
 
+```r
 source("01.RequiredPackages.R")
 # Automatically runs init_packages() and prepares your workspace.
+```
 
-📊 2. Normality Testing (02.NormalityTests.R)
+---
+
+## 📊 2. Normality Testing (02.NormalityTests.R)
+
 Statistical validity begins with assessing data distribution. This script performs Shapiro-Wilk, Anderson-Darling, and Lilliefors tests on a specified clinical variable. It outputs a comprehensive statistical summary (Excel) alongside high-quality Histograms and Q-Q plots.
 
-💻 Usage
+### 💻 Usage
 
+```r
 source("02.NormalityTests.R")
 
 # Run normality tests on a specific column
@@ -51,12 +61,17 @@ results <- normality(
   column = "Age", 
   preferred_name = "Patient_Age"
 )
+```
 
-🌧️ 3. Expression RainCloud Plots (03.RainCloudPlot.R)
+---
+
+## 🌧️ 3. Expression RainCloud Plots (03.RainCloudPlot.R)
+
 Compare relative gene expression between tissues (e.g., Tumor vs. Marginal) using aesthetically pleasing RainCloud plots. These plots combine a half-violin distribution, boxplot, and raw data jitter for maximum transparency. Automatically computes non-parametric tests (Mann-Whitney or Wilcoxon).
 
-💻 Usage
+### 💻 Usage
 
+```r
 source("03.RainCloudPlot.R")
 
 generate_raincloud(
@@ -66,14 +81,19 @@ generate_raincloud(
   col_ctrl  = "MarginalRelativeExp",
   label_case = "Tumor",
   label_control = "Marginal",
-  test_method = "wilcoxon" # or "mann_whitney"
+  test_method = "wilcoxon" # Options: "mann_whitney" or "wilcoxon"
 )
+```
 
-🎯 4. Biomarker ROC Analysis (04.ROC-Analysis.R)
-Evaluate the diagnostic potential of a gene. This script calculates the Area Under the Curve (AUC), 95% Confidence Intervals, Sensitivity, Specificity, PPV, NPV, and Likelihood Ratios based on Youden's Index. ROC curves are exported in .tiff, .png, .jpeg, and .pdf formats.
+---
 
-💻 Usage
+## 🎯 4. Biomarker ROC Analysis (04.ROC-Analysis.R)
 
+Evaluate the diagnostic potential of a gene. This script calculates the Area Under the Curve (AUC), 95% Confidence Intervals, Sensitivity, Specificity, PPV, NPV, and Likelihood Ratios based on Youden's Index. ROC curves are exported in `.tiff`, `.png`, `.jpeg`, and `.pdf` formats.
+
+### 💻 Usage
+
+```r
 source("04.ROC-Analysis.R")
 library(readxl)
 library(writexl)
@@ -89,12 +109,17 @@ roc_results <- analyze_roc_gene(
 )
 
 write_xlsx(roc_results, "P53_ROC_Stats.xlsx")
+```
 
-📋 5. Demographic Extraction (05.DemographicDataExtraction.R)
+---
+
+## 📋 5. Demographic Extraction (05.DemographicDataExtraction.R)
+
 Instantly generate Table 1 for your clinical paper. This function intelligently detects numeric vs. categorical columns, outputting Mean ± SD (and Ranges) for continuous variables, and Frequencies with Percentages for categorical variables.
 
-💻 Usage
+### 💻 Usage
 
+```r
 source("05.DemographicDataExtraction.R")
 library(readxl)
 
@@ -110,12 +135,17 @@ extract_demographics(
   selected_columns = my_vars,
   output_name = "Demographic_Table1.xlsx"
 )
+```
 
-🧬 6. Clinical Features Correlation (06.AnalysisOfClinicalFeatures.R)
+---
+
+## 🧬 6. Clinical Features Correlation (06.AnalysisOfClinicalFeatures.R)
+
 Investigate how gene expression correlates with clinical pathological features. This manager function handles both discrete data (Kruskal-Wallis/Mann-Whitney -> Boxplots) and continuous data (Spearman correlation -> Scatter plots with trendlines).
 
-💻 Usage
+### 💻 Usage
 
+```r
 source("06.AnalysisOfClinicalFeatures.R")
 library(readxl)
 
@@ -135,11 +165,17 @@ run_multi_gene_analysis(
   clinical_cols = clinical_vars,
   cutoff_list = my_cutoffs
 )
+```
 
-🔬 7. qRT-PCR Analysis (07.qpcrAnalyze.R)A complete automated pipeline for qRT-PCR data. Input your Delta Ct values, and the script evaluates normality, checks variance equality, runs the appropriate T-test (Student's or Welch's), computes Fold Change ($2^{-\Delta\Delta Ct}$), and generates labeled boxplots with standard significance stars (***).
+---
 
-💻 Usage
+## 🔬 7. qRT-PCR Expression Analysis (07.qpcrAnalyze.R)
 
+A complete automated pipeline for qRT-PCR data. Input your Delta Ct values, and the script evaluates normality, checks variance equality, runs the appropriate T-test (Student's or Welch's), computes Fold Change ($2^{-\Delta\Delta Ct}$), and generates labeled boxplots with standard significance stars (***).
+
+### 💻 Usage
+
+```r
 source("07.qpcrAnalyze.R")
 library(readxl)
 
@@ -154,12 +190,17 @@ analyze_qpcr(
   y_label = "Expression ratio P53/B2M",
   palette = c("#FF6347", "#4682B4")
 )
+```
 
-🔄 8. Cell Cycle Flow Cytometry (08.CellCycleAnalyze.R)
+---
+
+## 🔄 8. Cell Cycle Flow Cytometry (08.CellCycleAnalyze.R)
+
 Analyze phase distributions (G1, S, G2/M) from flow cytometry experiments. This function calculates standard deviations, performs independent T-tests, outputs a detailed statistical report, and generates a stunning combined multi-group plot with automated significance brackets.
 
-💻 Usage
+### 💻 Usage
 
+```r
 source("08.CellCycleAnalyze.R")
 library(readxl)
 
@@ -180,6 +221,9 @@ analyze_cell_cycle(
   palette       = c("#512DA8", "#E91E63"),
   save_dir      = "CellCycle_Results"
 )
+```
 
-💡 Notes on Visualization
-All generated plots across these modules are automatically exported as 300 DPI .tiff files using LZW compression, ensuring they meet the strict formatting guidelines required by major scientific journals.
+---
+
+### 💡 Notes on Scientific Visualization
+All generated plots across these modules are automatically exported as **300 DPI or 600 DPI `.tiff` files** using LZW compression, ensuring they fully comply with the strict formatting guidelines required by high-impact scientific journals.
